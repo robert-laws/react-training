@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React - First App</title>
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: bisque;
+        }
+        #base {
+            padding: 20px;
+        }
+
+        #base h1 {
+            font-size: 4rem;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="base"></div>
+    <script type="text/babel">
+        var root = document.querySelector('#base');
+
+        var Circle = React.createClass({
+            render: function() {
+                var circleStyle = {
+                    padding: 10,
+                    margin: 20,
+                    display: 'inline-block',
+                    backgroundColor: this.props.bgColor,
+                    borderRadius: '50%',
+                    width: this.props.size,
+                    height: this.props.size
+                }
+
+                return (
+                    <div style={circleStyle}>
+
+                    </div>
+                );
+            }
+        });
+
+        var colors = ['#D5A240', '#DC220A', '#11B092', '#44CA2A', '#9C82AA', '#DD9AA1', '#A40E9A'];
+
+        var renderData = [];
+
+        for(var i = 0; i < colors.length; i++) {
+            renderData.push(<Circle key={i} bgColor={colors[i]} size={getSize(50, 200)}/>);
+        }
+
+        function getSize(max, min) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function showCircle() {
+            var colors = ['#D5A240', '#DC220A', '#11B092', '#44CA2A'];
+            var rand = Math.floor(Math.random() * colors.length);
+
+            return <Circle bgColor={colors[rand]} size='100'/>
+        }
+
+        ReactDOM.render(
+            <div>
+                {renderData}
+            </div>, root
+        )
+    </script>
+</body>
+</html>

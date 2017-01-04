@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React - First App</title>
+    <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: bisque;
+        }
+        #base {
+            padding: 20px;
+        }
+
+        #base h1 {
+            font-size: 4rem;
+            font-family: sans-serif;
+            color: darkgreen;
+        }
+
+        .colorArea {
+            margin: 20px;
+        }
+
+        .colorSquare {
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="base"></div>
+    <script type="text/babel">
+        var root = document.querySelector('#base');
+
+        var Colorizer = React.createClass({
+            getInitialState: function() {
+                return {
+                    color: '',
+                    bgColor: ''
+                }
+            },
+            colorValue: function(e) {
+                this.setState({color: e.target.value});
+            },
+            setNewColor: function(e) {
+                this.setState({bgColor: this.state.color});
+
+                this._input.value = '';
+                this._input.focus();
+
+                e.preventDefault();
+            },
+            componentWillUpdate: function(newProps, newState) {
+                console.log("componentWillUpdate - about to update");
+                console.log(newProps);
+                console.log(newState);
+            },
+            componentDidUpdate: function(currentProps, currentState) {
+                console.log("componentDidUpdate - just updated");
+                console.log(currentProps);
+                console.log(currentState);
+            },
+            componentWillMount: function() {
+                console.log("componentWillMount - about to mount");
+            },
+            componentDidMount: function() {
+                console.log("componentDidMount - just mounted");
+            },
+            render: function() {
+                var squareStyle = {
+                    backgroundColor: this.state.bgColor
+                }
+
+                return (
+                    <div className="colorArea">
+                        <div style={squareStyle} className="colorSquare"></div>
+
+                        <form onSubmit={this.setNewColor}>
+                            <input
+                                ref={
+                                    (el) => this._input = el
+                                }
+                                onChange={this.colorValue}
+                                placeholder="Enter a Color Value"></input>
+                                <button type="submit">go</button>
+                        </form>
+                    </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+            <div>
+                <Colorizer/>
+            </div>, root
+        )
+    </script>
+</body>
+</html>
